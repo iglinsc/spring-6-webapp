@@ -17,7 +17,6 @@ public class Book {
     private Set<Author> authors = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
     public long getId() {

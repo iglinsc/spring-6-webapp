@@ -14,9 +14,9 @@ public class Publisher {
     private String name;
    private String address;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToMany(mappedBy = "publisher")
 
-private Set<Book> books = new HashSet<>();
+private Set<Book> books ;
     public String getCity() {
         return city;
     }
@@ -58,5 +58,31 @@ private Set<Book> books = new HashSet<>();
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Publisher publisher = (Publisher) o;
+        return id == publisher.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Publisher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", books=" + books +
+                ", city='" + city + '\'' +
+                '}';
     }
 }

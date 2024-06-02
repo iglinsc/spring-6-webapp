@@ -14,11 +14,11 @@ public class BootrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
-  private final PublisherRepository publisherRepository;
+    private final PublisherRepository publisherRepository;
+
     public BootrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
-
         this.publisherRepository = publisherRepository;
     }
 
@@ -48,7 +48,8 @@ public class BootrapData implements CommandLineRunner {
 
         savedEric.getBooks().add(savedBook);
         savedJohnDoe.getBooks().add(savedaaaBook2);
-
+ savedaaaBook2.getAuthors().add(savedEric);
+ savedBook.getAuthors().add(savedEric);
         Publisher publisher = new Publisher();
         publisher.setName("Amy");
         publisher.setAddress("123 Lake St");
@@ -56,14 +57,18 @@ public class BootrapData implements CommandLineRunner {
 
         Publisher savedPublisher = publisherRepository.save(publisher);
 
+        // Set the publisher for both books
+        savedBook.setPublisher(savedPublisher);
+        savedaaaBook2.setPublisher(savedPublisher);
+
         authorRepository.save(savedEric);
         authorRepository.save(savedJohnDoe);
+        bookRepository.save(savedBook);
+        bookRepository.save(savedaaaBook2);
 
         System.out.println("In bootstrap");
         System.out.println("Author count: " + authorRepository.count());
         System.out.println("Book count: " + bookRepository.count());
         System.out.println("Publisher count: " + publisherRepository.count());
-
-
     }
 }
